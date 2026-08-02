@@ -2,8 +2,8 @@
     <h3 class="text-warning">Listado de Productos</h3>
     <div class="btn btn-primary my-5" (click)="agregarProducto()">Agregar producto</div>
     <ul class="list-group w-50 mx-auto">
-        @for(productoElemento of productos; track productoElemento){
-            <app-productos [producto]="productoElemento"></app-productos>
+        @for(llave of obtenerLlaves(); track llave){
+            <app-productos [producto]="productos[llave]" [llave]="llave"></app-productos>
         }
     </ul>
 </div>

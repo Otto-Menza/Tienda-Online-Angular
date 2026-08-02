@@ -11,9 +11,11 @@ import { Router } from '@angular/router';
 })
 export class Productos {
   @Input() producto!: Producto;
+  @Input() llave!: string;
   descripcion: any;
   constructor( private router: Router){};
-  editarProducto(id: number){
-    this.router.navigate(['/editar', id]);
+  editarProducto(){
+    //pasamos la llave para leer dentro del diccionario
+    this.router.navigate(['/editar', this.llave]);
   }
 }
