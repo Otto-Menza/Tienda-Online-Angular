@@ -23,7 +23,11 @@ export class ProductoService {
   guardarProducto(producto: Producto, llave: string | null = null) {
     if(llave === null){
       //caso guardar producto
-      this.datosService.guardarProducto(producto).subscribe(() =>{
+      this.datosService.agregarProducto(producto).subscribe(() =>{
+        this.refrescarProductos();
+      });
+    }else{// caso de actualizar producto
+      this.datosService.modificarProducto(producto, llave).subscribe(() => {
         this.refrescarProductos();
       });
     }
@@ -40,8 +44,7 @@ export class ProductoService {
     this.productosActualizados.next(this.productos);//emitir la actualziacion de la lista
   }
   getProductoByLlave(llave: string): Producto | undefined{
-    return undefined;
-    //return this.productos.find(producto => producto.id === id );
+    return this.productos[llave];
   }
 
   eliminarProducto(id: number){

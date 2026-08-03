@@ -15,8 +15,13 @@ export class DatosService {
     return this.httpClient.get<{[llave:string]: Producto}>(this.url + 'datos.json');
   }
 
-  guardarProducto(producto: Producto): Observable<any>{
+  agregarProducto(producto: Producto): Observable<any>{
     //aqui se genera el valor de la llave de forma autpmatica
     return this.httpClient.post(`${this.url}datos.json`, producto);
+  }
+
+  modificarProducto(producto: Producto, llave: string): Observable<any>{
+    const url_modificada = `${this.url}datos/${llave}.json`;
+    return this.httpClient.put(url_modificada, producto);
   }
 }
