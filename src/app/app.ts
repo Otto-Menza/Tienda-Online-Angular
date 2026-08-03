@@ -12,7 +12,7 @@ import { Productos } from "./productos/productos";
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('Servicios y Observables en Angular');
+  protected readonly title = signal('Tienda Online');
   mensaje: string;
 
   constructor(mensajeService: Mensaje){

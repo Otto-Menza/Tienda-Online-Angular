@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Formulario } from "../formulario/formulario";
 import { ProductoService } from '../producto';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 export class ListadoProductos {
 
   productos: {[llave:string]: Producto} ={};
+  productosSubscripcion: Subscription | null = null;
 
   constructor(private productoService: ProductoService,
     private router: Router
@@ -26,12 +28,18 @@ export class ListadoProductos {
   
   ngOnInit(){
     this.cargarProductos();
+
+    //escuchar los cambios en la lista
+    this.productosSubscripcion = this.productoService.productosActualizados.subscribe((productos) => {
+      this.productos = productos;
+    });
   }
 
   cargarProductos(){
     this.productoService.listarProductos().subscribe((productos: {[llave:string]: Producto} ={}) => {
       this.productos = productos;
-    })
+      this.productoService.setProductos(productos);
+    });
   }
 
   obtenerLlaves(): string[]{
@@ -43,5 +51,11 @@ export class ListadoProductos {
 
   agregarProducto(){
     this.router.navigate(['agregar']);
+  }
+
+  ngOnDestroy(): void {
+    if(this.productosSubscripcion != null){
+      this.productosSubscripcion.unsubscribe();
+    }
   }
 }

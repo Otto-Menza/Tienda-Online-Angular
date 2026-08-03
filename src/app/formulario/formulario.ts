@@ -43,7 +43,7 @@ export class Formulario {
     }
     const producto = new Producto(this.descripcionInput, this.precioInput);
     //nuevo producto usando el servidios
-    this.productoService.guardarProducto(producto);
+    this.productoService.guardarProducto(producto, this.llaveProducto);
 
     //Limpiar los campos del formulario
     this.limpiarFormulario();
