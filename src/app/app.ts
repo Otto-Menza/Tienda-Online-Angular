@@ -1,21 +1,28 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { ListadoProductos } from "./listado-productos/listado-productos";
 import { Mensaje } from './mensaje';
 import { ListadoUsuarios } from "./listado-usuarios/listado-usuarios";
 import { Productos } from "./productos/productos";
+import { LoginServices } from './login';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ListadoProductos, ListadoUsuarios, Productos],
+  imports: [RouterOutlet, ListadoProductos, ListadoUsuarios, Productos, RouterLink],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   protected readonly title = signal('Tienda Online');
-  mensaje: string;
+  
 
-  constructor(mensajeService: Mensaje){
-    this.mensaje = mensajeService.obtenerMensaje();
+  constructor(private loginServices: LoginServices){}
+
+  isAutenticado() {
+    return this.loginServices.isAutenticado();
   }
+  salir() {
+    this.loginServices.logout();
+  }
+  
 }
